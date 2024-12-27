@@ -211,36 +211,46 @@ from the provided <code>path</code> to an Artifact Store denoted by the <code>st
 <h2 id="artifact-store">Artifact Store</h2>
 <p>An Artifact Store is Bob's way of abstracting the kind of storage needed to store artifacts. This
 is akin to an abstract object store where Bob can store and retrieve artifacts.</p>
-<p>An artifact store is any system which has the following properties:
-- It is a web server.
-- It is reachable from the network that Bob is in.
-- Exposes an endpoint at <code>/bob_artifact/&lt;path&gt;</code> which:
-  - When a <code>GET</code> request is made on it, the corresponding artifact is sent back.
-  Here the <code>path</code> stands for a path to from which an artifact can be uniquely retrieved.
-  This is like the key in Amazon's S3. Example: <code>bob_artifact/dev/test/run-id/test.jar</code>
-  - When a <code>POST</code> request is made on it with the body being the file content, the data is saved at the <code>path</code>.
-  - When a <code>DELETE</code> request is made on it, the corresponding resource is deleted at the <code>path</code>.</p>
-<p>A reference artifact store which implements storage using local file system can be <a href="https://github.com/bob-cd/artifact-local">found</a></p>
-<p>This gives the following advantages:
-- Bob now doesn't have to care about <em>how</em> to store an artifact.
-- Using an artifact store details like auth, permissions etc can be offloaded outside of Bob.
-- Multiple instances of Bob can share an Artifact store.
-- Artifacts are preserved regardless of Bob's availability.
-- The Artifact store can be written an any language and be registered at runtime with Bob.</p>
+<p>An artifact store is any system which has the following properties:</p>
+<ul>
+<li>It is a web server.</li>
+<li>It is reachable from the network that Bob is in.</li>
+<li>Exposes an endpoint at <code>/bob_artifact/&lt;path&gt;</code> which:<ul>
+<li>When a <code>GET</code> request is made on it, the corresponding artifact is sent back.
+Here the <code>path</code> stands for a path to from which an artifact can be uniquely retrieved.
+This is like the key in Amazon's S3. Example: <code>bob_artifact/dev/test/run-id/test.jar</code></li>
+<li>When a <code>POST</code> request is made on it with the body being the file content, the data is saved at the <code>path</code>.</li>
+<li>When a <code>DELETE</code> request is made on it, the corresponding resource is deleted at the <code>path</code>.</li>
+</ul>
+</li>
+</ul>
+<p>A reference artifact store which implements storage using local file system can be found <a href="https://github.com/bob-cd/artifact-local">here</a>.</p>
+<p>This gives the following advantages:</p>
+<ul>
+<li>Bob now doesn't have to care about <em>how</em> to store an artifact.</li>
+<li>Using an artifact store details like auth, permissions etc can be offloaded outside of Bob.</li>
+<li>Multiple instances of Bob can share an Artifact store.</li>
+<li>Artifacts are preserved regardless of Bob's availability.</li>
+<li>The Artifact store can be written an any language and be registered at runtime with Bob.</li>
+</ul>
 <p>An artifact store <strong>must</strong> be registered with Bob prior to the execution of a Step that produces an artifact.</p>
-<p>To register an Artifact store with Bob:
-- Make a <code>POST</code> request on the end point <code>/artifact-stores/&lt;name&gt;</code> with the body:
+<p>To register an Artifact store with Bob:</p>
+<ul>
+<li>Make a <code>POST</code> request on the end point <code>/artifact-stores/&lt;name&gt;</code> with the body:
   <div class="language-json highlight"><pre><span></span><code><span id="__span-1-1"><a href="#__codelineno-1-1" id="__codelineno-1-1" name="__codelineno-1-1"></a><span class="p">{</span>
 </span><span id="__span-1-2"><a href="#__codelineno-1-2" id="__codelineno-1-2" name="__codelineno-1-2"></a><span class="w">  </span><span class="nt">"url"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://my-awesome-artifacts.bob.io"</span>
 </span><span id="__span-1-3"><a href="#__codelineno-1-3" id="__codelineno-1-3" name="__codelineno-1-3"></a><span class="p">}</span>
-</span></code></pre></div>
-- A <code>202</code> response from Bob indicates success.
-  Here <code>name</code> is the unique name with which Bob identifies this. The url must be reachable from Bob.</p>
+</span></code></pre></div></li>
+<li>A <code>202</code> response from Bob indicates success.
+  Here <code>name</code> is the unique name with which Bob identifies this. The url must be reachable from Bob.</li>
+</ul>
 <p>Conversely a <code>DELETE</code> request on <code>/artifact-stores/&lt;name&gt;</code> un-registers it from Bob.</p>
 <p>To list the registered store make a <code>GET</code> request on <code>/artifact-stores</code>.</p>
-<p>To retrieve an artifact from a pipeline run:
-- Make a <code>GET</code> request on <code>/pipelines/groups/&lt;group&gt;/names/&lt;name&gt;/runs/&lt;id&gt;/artifact-stores/&lt;store-name&gt;/artifact/&lt;artifact-name&gt;</code>.
-- The artifact is directly streamed from the Artifact Store via Bob.</p>
+<p>To retrieve an artifact from a pipeline run:</p>
+<ul>
+<li>Make a <code>GET</code> request on <code>/pipelines/groups/&lt;group&gt;/names/&lt;name&gt;/runs/&lt;id&gt;/artifact-stores/&lt;store-name&gt;/artifact/&lt;artifact-name&gt;</code>.</li>
+<li>The artifact is directly streamed from the Artifact Store via Bob.</li>
+</ul>
 </article>
 </div>
 <script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>

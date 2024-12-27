@@ -202,15 +202,21 @@ can be executed successfully, e.g. source code which needs to be continuously in
 </span><span id="__span-0-4"><a href="#__codelineno-0-4" id="__codelineno-0-4" name="__codelineno-0-4"></a><span class="p">}</span>
 </span></code></pre></div>
 This resource must be declared in the <code>resources</code> section of the Pipeline definition.</p>
-<p>Each entry consists of the following keys:
-- <code>name</code>: String, Required: The unique name of the resource by which its to be referred in the <code>needs_resource</code> key of a step.
-- <code>type</code>: String, Required: This can either be <code>internal</code> or <code>external</code>. External resources are to be fetched from a Resource Provider, whereas Internal ones are outputs of another pipeline in the system. Resources are loaded lazily when required, so if a declared resource isn’t used in a step, it will not be fetched and if fetched will be cached for the remainder of the steps.</p>
+<p>Each entry consists of the following keys:</p>
+<ul>
+<li><code>name</code>: String, Required: The unique name of the resource by which its to be referred in the <code>needs_resource</code> key of a step.</li>
+<li><code>type</code>: String, Required: This can either be <code>internal</code> or <code>external</code>. External resources are to be fetched from a Resource Provider, whereas Internal ones are outputs of another pipeline in the system. Resources are loaded lazily when required, so if a declared resource isn’t used in a step, it will not be fetched and if fetched will be cached for the remainder of the steps.</li>
+</ul>
 <p>Conditional keys:</p>
-<p>If type is <code>external</code>:
-- <code>params</code>: Map[String, Any], Required: This are the params that are to be sent to the Resource Provider when requesting the resource. These are a property of that particular provider and helps in customizing the kind of resource fetched.</p>
-<p>If type is <code>internal</code>:
-- <code>params</code>: Map[String, Any], Required: This are the params that are to be sent to the <a href="https://bob-cd.github.io/pages/concepts/artifact.html">Artifact</a> Store when requesting the resource. Since Bob is going to request an artifact from a previous build, it simply calls the corresponding Artifact Store with the <code>group</code>, <code>name</code>, <code>run_id</code> of the artifact that was produced. The <code>name</code> of the artifact must be same as the <code>name</code> of the resource.
-- <code>provider</code>: In this case this becomes the name of the registered Artifact Store.</p>
+<p>If type is <code>external</code>:</p>
+<ul>
+<li><code>params</code>: Map[String, Any], Required: This are the params that are to be sent to the Resource Provider when requesting the resource. These are a property of that particular provider and helps in customizing the kind of resource fetched.</li>
+</ul>
+<p>If type is <code>internal</code>:</p>
+<ul>
+<li><code>params</code>: Map[String, Any], Required: This are the params that are to be sent to the <a href="https://bob-cd.github.io/pages/concepts/artifact.html">Artifact</a> Store when requesting the resource. Since Bob is going to request an artifact from a previous build, it simply calls the corresponding Artifact Store with the <code>group</code>, <code>name</code>, <code>run_id</code> of the artifact that was produced. The <code>name</code> of the artifact must be same as the <code>name</code> of the resource.</li>
+<li><code>provider</code>: In this case this becomes the name of the registered Artifact Store.</li>
+</ul>
 <p>Example:
 <div class="language-json highlight"><pre><span></span><code><span id="__span-1-1"><a href="#__codelineno-1-1" id="__codelineno-1-1" name="__codelineno-1-1"></a><span class="p">[</span>
 </span><span id="__span-1-2"><a href="#__codelineno-1-2" id="__codelineno-1-2" name="__codelineno-1-2"></a><span class="w">  </span><span class="p">{</span>
@@ -241,34 +247,41 @@ This is provided to Bob via a Resource Provider.</p>
 various resources.</p>
 <p>The most general use case for a resource provider is to clone source code that is to be
 continuously integrated and delivered.</p>
-<p>A Resource Provider is any system which has the following properties:
-- It is a web server.
-- It is reachable from the network that Bob is in.
-- Exposes an endpoint at <code>/bob_resource</code> upon which when a <code>GET</code> request is made,
-  a <code>tar</code> archive is sent back. The rationale for using the tar format is:
-    - Its quite ubiquitous and can be implemented with relative ease as its part of the stdlib of various languages.
-    - Generally resources tend to be source code and have multiple files/folders and
-      using an archive makes it easy to send multiple things.
-    - Bob uses Podman as its orchestrator and follows its design decision of using tar files to send things over.</p>
+<p>A Resource Provider is any system which has the following properties:</p>
+<ul>
+<li>It is a web server.</li>
+<li>It is reachable from the network that Bob is in.</li>
+<li>Exposes an endpoint at <code>/bob_resource</code> upon which when a <code>GET</code> request is made, a <code>tar</code> archive is sent back. The rationale for using the tar format is:<ul>
+<li>Its quite ubiquitous and can be implemented with relative ease as its part of the stdlib of various languages.</li>
+<li>Generally resources tend to be source code and have multiple files/folders and
+  using an archive makes it easy to send multiple things.</li>
+<li>Bob uses Podman as its orchestrator and follows its design decision of using tar files to send things over.</li>
+</ul>
+</li>
+</ul>
 <p>A reference resource provider which handles simple Github pulls can be <a href="https://github.com/bob-cd/resource-git">found</a></p>
-<p>This gives the following advantages:
-- Bob doesn't have to care about <em>how</em> to fetch a particular Resource nor does it have to care about <em>what</em>
-  the resource is.
-- Using a resource provider details like auth, permissions and in cases like source control, things pertaining
-  to private repositories, user access etc can be offloaded outside of Bob.
-- Multiple instances of Bob can share a resource provider.
-- Pretty much any source of data can be abstracted specially the various Version Control Systems.
-- The Resource Provider can be written in any language, can scale independently of Bob and be
-  registered at runtime with Bob.</p>
+<p>This gives the following advantages:</p>
+<ul>
+<li>Bob doesn't have to care about <em>how</em> to fetch a particular Resource nor does it have to care about <em>what</em>
+  the resource is.</li>
+<li>Using a resource provider details like auth, permissions and in cases like source control, things pertaining
+  to private repositories, user access etc can be offloaded outside of Bob.</li>
+<li>Multiple instances of Bob can share a resource provider.</li>
+<li>Pretty much any source of data can be abstracted specially the various Version Control Systems.</li>
+<li>The Resource Provider can be written in any language, can scale independently of Bob and be
+  registered at runtime with Bob.</li>
+</ul>
 <p>A resource provider <strong>must</strong> be registered with Bob prior to the execution of a Step that needs a resource.</p>
-<p>To register a Resource provider with Bob:
-- Make a <code>POST</code> request on the end point <code>/resource-providers/&lt;name&gt;</code> with the body:
+<p>To register a Resource provider with Bob:</p>
+<ul>
+<li>Make a <code>POST</code> request on the end point <code>/resource-providers/&lt;name&gt;</code> with the body:
   <div class="language-json highlight"><pre><span></span><code><span id="__span-2-1"><a href="#__codelineno-2-1" id="__codelineno-2-1" name="__codelineno-2-1"></a><span class="p">{</span>
 </span><span id="__span-2-2"><a href="#__codelineno-2-2" id="__codelineno-2-2" name="__codelineno-2-2"></a><span class="w">  </span><span class="nt">"url"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://my-awesome-resources.bob.io"</span>
 </span><span id="__span-2-3"><a href="#__codelineno-2-3" id="__codelineno-2-3" name="__codelineno-2-3"></a><span class="p">}</span>
-</span></code></pre></div>
-- A <code>202</code> response from Bob indicates success.
-  Here <code>name</code> is the unique name with which Bob identifies this. The url must be reachable from Bob.</p>
+</span></code></pre></div></li>
+<li>A <code>202</code> response from Bob indicates success.
+  Here <code>name</code> is the unique name with which Bob identifies this. The url must be reachable from Bob.</li>
+</ul>
 <p>Conversely a <code>DELETE</code> request on <code>/resource-providers/&lt;name&gt;</code> un-registers it from Bob.</p>
 <p>To list registered resource providers make a <code>GET</code> request on <code>/resource-providers</code>.</p>
 </article>
