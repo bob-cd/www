@@ -296,13 +296,13 @@
 </div>
 <div class="md-content" data-md-component="content">
 <article class="md-content__inner md-typeset">
-<h1 id="getting-started">Getting Started</h1>
+<h1 id="getting-started">Getting Started<a class="headerlink" href="#getting-started" title="Permanent link">¶</a></h1>
 <p>This document is meant to help you to run Bob locally on some popular platforms</p>
-<h2 id="running-bob-on-other-platforms">Running Bob on other platforms</h2>
+<h2 id="running-bob-on-other-platforms">Running Bob on other platforms<a class="headerlink" href="#running-bob-on-other-platforms" title="Permanent link">¶</a></h2>
 <p>Checkout the <a href="https://github.com/bob-cd/bob-deploy">bob-deploy</a> repo for reference deployments on various platforms</p>
-<h2 id="running-a-local-bob-cluster">Running a local Bob cluster</h2>
+<h2 id="running-a-local-bob-cluster">Running a local Bob cluster<a class="headerlink" href="#running-a-local-bob-cluster" title="Permanent link">¶</a></h2>
 <p>To get a minimal setup running locally (with a simple Github public repo and file system based storage), we will run <a href="https://github.com/bob-cd/bob">bob</a>, <a href="https://github.com/bob-cd/resource-git">resource-git</a> and <a href="https://github.com/bob-cd/artifact-local">artifact-store</a>.</p>
-<h3 id="on-kubernetes">On Kubernetes</h3>
+<h3 id="on-kubernetes">On Kubernetes<a class="headerlink" href="#on-kubernetes" title="Permanent link">¶</a></h3>
 <ol>
 <li>Use a remote cluster or setup a local one using <a href="https://kind.sigs.k8s.io/">kind</a> or <a href="https://minikube.sigs.k8s.io/docs/">Minikube</a> etc</li>
 <li>Apply the <a href="https://github.com/bob-cd/bob-deploy/tree/main/k8s">manifests</a>: <code>kubectl apply -f k8s/</code></li>
@@ -312,7 +312,7 @@
 </ul>
 </li>
 </ol>
-<h3 id="on-podman-or-docker">On Podman or Docker</h3>
+<h3 id="on-podman-or-docker">On Podman or Docker<a class="headerlink" href="#on-podman-or-docker" title="Permanent link">¶</a></h3>
 <ol>
 <li>Download <a href="https://podman.io/getting-started/installation">Podman</a> or <a href="https://docs.docker.com/engine/security/rootless/">Rootless Docker</a></li>
 <li>Fetch this <a href="https://github.com/bob-cd/bob-deploy/blob/main/docker-compose.yml">docker-compose.yml</a> file with <code>curl -LfO 'https://raw.githubusercontent.com/bob-cd/bob-deploy/main/docker-compose.yml'</code></li>
@@ -324,11 +324,11 @@
 </span></code></pre></div></li>
 <li>When it all comes up, bob should be available on port <code>7777</code></li>
 </ol>
-<h3 id="using-the-api">Using the API</h3>
+<h3 id="using-the-api">Using the API<a class="headerlink" href="#using-the-api" title="Permanent link">¶</a></h3>
 <p>Bob exposes itself fully via a REST API as described <a href="https://bob-cd.github.io/pages/api-reference.html">here</a>
 HTTP clients like <a href="https://curl.haxx.se/">curl</a>, <a href="https://httpie.org/">HTTPie</a>, <a href="https://insomnia.rest/">Insomnia</a> etc could be used to directly interact with the <a href="../api/">API</a>.</p>
 <p>We would be using <a href="https://github.com/bob-cd/wendy">Wendy</a>, the reference CLI.</p>
-<h3 id="building-a-simple-project-on-bob">Building a simple project on Bob</h3>
+<h3 id="building-a-simple-project-on-bob">Building a simple project on Bob<a class="headerlink" href="#building-a-simple-project-on-bob" title="Permanent link">¶</a></h3>
 <p>This assumes the above steps have been followed and a Bob cluster is available on <code>http://localhost:7777</code> and Wendy is set up.</p>
 <ul>
 <li>Test if Bob is ready:

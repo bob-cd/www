@@ -218,7 +218,7 @@
 </div>
 <div class="md-content" data-md-component="content">
 <article class="md-content__inner md-typeset">
-<h1 id="artifacts">Artifacts</h1>
+<h1 id="artifacts">Artifacts<a class="headerlink" href="#artifacts" title="Permanent link">¶</a></h1>
 <p>An Artifact is the outcome of a pipeline which is to be stored away or consumed in another pipeline.</p>
 <p>In Bob, an artifact can be produced at any Step in a pipeline. In Bob, like Concourse CI, its important
 that artifacts <strong>should not</strong> be stored within the system as Artifacts should be there regardless of
@@ -235,7 +235,7 @@ Bob being there or not. This is something that is not there in most of the other
 </span></code></pre></div>
 <p>When Bob encounters such a step, it executes the step and if its successful, uploads the artifact
 from the provided <code>path</code> to an Artifact Store denoted by the <code>store</code> key.</p>
-<h2 id="artifact-store">Artifact Store</h2>
+<h2 id="artifact-store">Artifact Store<a class="headerlink" href="#artifact-store" title="Permanent link">¶</a></h2>
 <p>An Artifact Store is Bob's way of abstracting the kind of storage needed to store artifacts. This
 is akin to an abstract object store where Bob can store and retrieve artifacts.</p>
 <p>An artifact store is any system which has the following properties:</p>

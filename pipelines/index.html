@@ -274,10 +274,10 @@
 </div>
 <div class="md-content" data-md-component="content">
 <article class="md-content__inner md-typeset">
-<h1 id="pipelines">Pipelines</h1>
+<h1 id="pipelines">Pipelines<a class="headerlink" href="#pipelines" title="Permanent link">¶</a></h1>
 <p>A Pipeline is the only unit of execution in Bob.</p>
 <p>A pipeline consists of the following:</p>
-<h2 id="image">Image</h2>
+<h2 id="image">Image<a class="headerlink" href="#image" title="Permanent link">¶</a></h2>
 <p>Bob implements a pipeline as a series of steps carried out on a starting container image.
 This image is used to set the context of the build and is used to get the prerequisites like
 compilers, build tooling, deployment tooling etc.</p>
@@ -287,7 +287,7 @@ compilers, build tooling, deployment tooling etc.</p>
 <li>For docker hub: <code>docker.io/library/ubuntu:latest</code></li>
 <li>For quay: <code>quay.io/podman/stable</code></li>
 </ul>
-<h2 id="vars">Vars</h2>
+<h2 id="vars">Vars<a class="headerlink" href="#vars" title="Permanent link">¶</a></h2>
 <p>Vars is a map of key-value pairs which denotes the environment variables that is to be available
 to all the steps of the pipeline.</p>
 <p>Example:
@@ -296,7 +296,7 @@ to all the steps of the pipeline.</p>
 </span><span id="__span-0-3"><a href="#__codelineno-0-3" id="__codelineno-0-3" name="__codelineno-0-3"></a><span class="w">  </span><span class="nt">"env"</span><span class="p">:</span><span class="w"> </span><span class="s2">"prod"</span>
 </span><span id="__span-0-4"><a href="#__codelineno-0-4" id="__codelineno-0-4" name="__codelineno-0-4"></a><span class="p">}</span>
 </span></code></pre></div></p>
-<h2 id="a-list-of-steps">A List of Steps</h2>
+<h2 id="a-list-of-steps">A List of Steps<a class="headerlink" href="#a-list-of-steps" title="Permanent link">¶</a></h2>
 <p>A Step is essentially a key-value pair consisting of the following keys:</p>
 <ul>
 <li><code>cmd</code>: String, Required: This is the command that is to be executed.
@@ -340,10 +340,10 @@ to the artifact store.</li>
 </span><span id="__span-2-6"><a href="#__codelineno-2-6" id="__codelineno-2-6" name="__codelineno-2-6"></a><span class="w">  </span><span class="p">}</span>
 </span><span id="__span-2-7"><a href="#__codelineno-2-7" id="__codelineno-2-7" name="__codelineno-2-7"></a><span class="p">}</span>
 </span></code></pre></div></p>
-<h2 id="list-of-resources">List of Resources</h2>
+<h2 id="list-of-resources">List of Resources<a class="headerlink" href="#list-of-resources" title="Permanent link">¶</a></h2>
 <p>Resources is a list of key-value pairs which defines the list of <a href="../resources/">Resources</a> which may be
 consumed by one or more of the steps of the pipeline.</p>
-<h2 id="full-working-pipeline-example">Full working pipeline example</h2>
+<h2 id="full-working-pipeline-example">Full working pipeline example<a class="headerlink" href="#full-working-pipeline-example" title="Permanent link">¶</a></h2>
 <div class="language-json highlight"><pre><span></span><code><span id="__span-3-1"><a href="#__codelineno-3-1" id="__codelineno-3-1" name="__codelineno-3-1"></a><span class="p">{</span>
 </span><span id="__span-3-2"><a href="#__codelineno-3-2" id="__codelineno-3-2" name="__codelineno-3-2"></a><span class="w">  </span><span class="nt">"image"</span><span class="p">:</span><span class="w"> </span><span class="s2">"docker.io/library/busybox:musl"</span><span class="p">,</span>
 </span><span id="__span-3-3"><a href="#__codelineno-3-3" id="__codelineno-3-3" name="__codelineno-3-3"></a><span class="w">  </span><span class="nt">"vars"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
