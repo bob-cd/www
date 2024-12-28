@@ -122,13 +122,27 @@
 </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="#running-a-local-bob-cluster-on-podman-or-docker">
+<a class="md-nav__link" href="#running-a-local-bob-cluster">
 <span class="md-ellipsis">
-      Running a local Bob cluster on Podman or Docker
+      Running a local Bob cluster
     </span>
 </a>
-<nav aria-label="Running a local Bob cluster on Podman or Docker" class="md-nav">
+<nav aria-label="Running a local Bob cluster" class="md-nav">
 <ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#on-kubernetes">
+<span class="md-ellipsis">
+      On Kubernetes
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#on-podman-or-docker">
+<span class="md-ellipsis">
+      On Podman or Docker
+    </span>
+</a>
+</li>
 <li class="md-nav__item">
 <a class="md-nav__link" href="#using-the-api">
 <span class="md-ellipsis">
@@ -230,13 +244,27 @@
 </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="#running-a-local-bob-cluster-on-podman-or-docker">
+<a class="md-nav__link" href="#running-a-local-bob-cluster">
 <span class="md-ellipsis">
-      Running a local Bob cluster on Podman or Docker
+      Running a local Bob cluster
     </span>
 </a>
-<nav aria-label="Running a local Bob cluster on Podman or Docker" class="md-nav">
+<nav aria-label="Running a local Bob cluster" class="md-nav">
 <ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#on-kubernetes">
+<span class="md-ellipsis">
+      On Kubernetes
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#on-podman-or-docker">
+<span class="md-ellipsis">
+      On Podman or Docker
+    </span>
+</a>
+</li>
 <li class="md-nav__item">
 <a class="md-nav__link" href="#using-the-api">
 <span class="md-ellipsis">
@@ -265,8 +293,19 @@
 <p>This document is meant to help you to run Bob locally on some popular platforms</p>
 <h2 id="running-bob-on-other-platforms">Running Bob on other platforms</h2>
 <p>Checkout the <a href="https://github.com/bob-cd/bob-deploy">bob-deploy</a> repo for reference deployments on various platforms</p>
-<h2 id="running-a-local-bob-cluster-on-podman-or-docker">Running a local Bob cluster on Podman or Docker</h2>
+<h2 id="running-a-local-bob-cluster">Running a local Bob cluster</h2>
 <p>To get a minimal setup running locally (with a simple Github public repo and file system based storage), we will run <a href="https://github.com/bob-cd/bob">bob</a>, <a href="https://github.com/bob-cd/resource-git">resource-git</a> and <a href="https://github.com/bob-cd/artifact-local">artifact-store</a>.</p>
+<h3 id="on-kubernetes">On Kubernetes</h3>
+<ol>
+<li>Use a remote cluster or setup a local one using <a href="https://kind.sigs.k8s.io/">kind</a> or <a href="https://minikube.sigs.k8s.io/docs/">Minikube</a> etc</li>
+<li>Apply the <a href="https://github.com/bob-cd/bob-deploy/tree/main/k8s">manifests</a>: <code>kubectl apply -f k8s/</code></li>
+<li>This depolys the cluster exposed via the <code>bob-apiserver</code> ClusterIP Serivce:<ul>
+<li>If using a remote cluster, you may want to <a href="https://kubernetes.io/docs/tutorials/kubernetes-basics/expose/expose-intro/">expose</a> it</li>
+<li>If on a local cluster, port forward it: <code>kubectl port-forward service/bob-apiserver 7777:7777</code></li>
+</ul>
+</li>
+</ol>
+<h3 id="on-podman-or-docker">On Podman or Docker</h3>
 <ol>
 <li>Download <a href="https://podman.io/getting-started/installation">Podman</a> or <a href="https://docs.docker.com/engine/security/rootless/">Rootless Docker</a></li>
 <li>Fetch this <a href="https://github.com/bob-cd/bob-deploy/blob/main/docker-compose.yml">docker-compose.yml</a> file with <code>curl -LfO 'https://raw.githubusercontent.com/bob-cd/bob-deploy/main/docker-compose.yml'</code></li>
