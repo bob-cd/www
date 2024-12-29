@@ -304,17 +304,15 @@
 <p>Wendy is built using the <a href="https://go.dev/">Go</a> programming language and uses <a href="https://github.com/lispyclouds/climate">climate</a> at its core for its functionality.</p>
 <h4 id="installation">Installation<a class="headerlink" href="#installation" title="Permanent link">¶</a></h4>
 <ul>
-<li>As of now its to be built from source:<ul>
+<li>As of now its to be built from source:</li>
 <li>Clone the repo:
-  <div class="language-bash highlight"><pre><span></span><code><span id="__span-0-1"><a href="#__codelineno-0-1" id="__codelineno-0-1" name="__codelineno-0-1"></a>git<span class="w"> </span>clone<span class="w"> </span>https://github.com/bob-cd/wendy
+    <div class="language-bash highlight"><pre><span></span><code><span id="__span-0-1"><a href="#__codelineno-0-1" id="__codelineno-0-1" name="__codelineno-0-1"></a>git<span class="w"> </span>clone<span class="w"> </span>https://github.com/bob-cd/wendy
 </span></code></pre></div></li>
 <li>Make sure Go 1.23+ is <a href="https://go.dev/doc/install">installed</a></li>
 <li>Build:
-  <div class="language-bash highlight"><pre><span></span><code><span id="__span-1-1"><a href="#__codelineno-1-1" id="__codelineno-1-1" name="__codelineno-1-1"></a>go<span class="w"> </span>build
+    <div class="language-bash highlight"><pre><span></span><code><span id="__span-1-1"><a href="#__codelineno-1-1" id="__codelineno-1-1" name="__codelineno-1-1"></a>go<span class="w"> </span>build
 </span></code></pre></div></li>
 <li>Place the resulting binary <code>wendy</code> into your PATH</li>
-</ul>
-</li>
 </ul>
 <h4 id="usage">Usage<a class="headerlink" href="#usage" title="Permanent link">¶</a></h4>
 <p>The following are the configuration options and the defaults:</p>
@@ -323,10 +321,10 @@
 <li><code>api_path</code>: The path where the OpenAPI spec is located. Used for bootstrapping. Defaults to <code>"/api.yaml"</code></li>
 </ul>
 <p>Run <code>wendy configure</code> to set them to different values.</p>
-<p>Wendy is able to bootstrap the commands from the spec, run the following for the first time or to refresh the commands
+<p>Wendy is able to bootstrap the commands from the spec, run the following for the first time or to refresh the commands</p>
 <div class="language-bash highlight"><pre><span></span><code><span id="__span-2-1"><a href="#__codelineno-2-1" id="__codelineno-2-1" name="__codelineno-2-1"></a>wendy<span class="w"> </span>bootstrap
 </span></code></pre></div>
-After this the full set of commands will be available and the cluster can be interacted with.</p>
+<p>After this the full set of commands will be available and the cluster can be interacted with.</p>
 <h4 id="types-of-commands">Types of commands<a class="headerlink" href="#types-of-commands" title="Permanent link">¶</a></h4>
 <p>The commands that are bootstrapped from Bob are mostly imperative, eg:</p>
 <ul>
@@ -334,7 +332,7 @@ After this the full set of commands will be available and the cluster can be int
 <li><code>wendy resource-providers create --spec '{"name": "resource-git", "url": "http://resource-git:8000"}'</code></li>
 </ul>
 <p>Wendy offers the <code>apply</code> command to declaratively and idempotently deal with resources via manifest files.</p>
-<p>A manifest file is of the following shape
+<p>A manifest file is of the following shape</p>
 <div class="language-yaml highlight"><table class="highlighttable"><tr><th class="filename" colspan="2"><span class="filename">pipeline.yaml</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-3-1"> 1</a></span>
 <span class="normal"><a href="#__codelineno-3-2"> 2</a></span>
 <span class="normal"><a href="#__codelineno-3-3"> 3</a></span>
@@ -391,10 +389,10 @@ After this the full set of commands will be available and the cluster can be int
 </span><span id="__span-3-27"><a id="__codelineno-3-27" name="__codelineno-3-27"></a><span class="w">        </span><span class="nt">repo</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">https://github.com/lispyclouds/bob-example</span>
 </span><span id="__span-3-28"><a id="__codelineno-3-28" name="__codelineno-3-28"></a><span class="w">        </span><span class="nt">branch</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">main</span>
 </span></code></pre></div></td></tr></table></div>
-The <code>spec</code> should correspond to the <code>--spec</code> in the implement commands.</p>
-<p>Apply as:
+<p>The <code>spec</code> should correspond to the <code>--spec</code> in the implement commands.</p>
+<p>Apply as:</p>
 <div class="language-bash highlight"><pre><span></span><code><span id="__span-4-1"><a href="#__codelineno-4-1" id="__codelineno-4-1" name="__codelineno-4-1"></a>wendy<span class="w"> </span>apply<span class="w"> </span>-m<span class="w"> </span>pipeline.yaml
-</span></code></pre></div></p>
+</span></code></pre></div>
 <p>More examples of manifests can be found <a href="https://github.com/bob-cd/wendy/tree/main/manifests">here</a></p>
 <p>Wendy is a work in progress but mostly usable. Thing may change and feedback is most welcome!</p>
 </article>
