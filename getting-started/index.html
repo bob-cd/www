@@ -425,35 +425,26 @@ HTTP clients like <a href="https://curl.haxx.se/">curl</a>, <a href="https://htt
 <li>Follow the events of the run via <a href="https://en.wikipedia.org/wiki/Server-sent_events">SSE</a>:
   <div class="language-bash highlight"><pre><span></span><code><span id="__span-11-1"><a href="#__codelineno-11-1" id="__codelineno-11-1" name="__codelineno-11-1"></a>wendy<span class="w"> </span>events<span class="w"> </span>stream
 </span></code></pre></div>
-  should respond with JSON encoded events, hit ctrl-c to close it:
-  <div class="language-json highlight"><pre><span></span><code><span id="__span-12-1"><a href="#__codelineno-12-1" id="__codelineno-12-1" name="__codelineno-12-1"></a><span class="p">{</span>
-</span><span id="__span-12-2"><a href="#__codelineno-12-2" id="__codelineno-12-2" name="__codelineno-12-2"></a><span class="w">  </span><span class="nt">"run-id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"r-0ef66ba9-e397-461b-a6d9-f52f91889264"</span><span class="p">,</span>
-</span><span id="__span-12-3"><a href="#__codelineno-12-3" id="__codelineno-12-3" name="__codelineno-12-3"></a><span class="w">  </span><span class="nt">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"pipeline"</span><span class="p">,</span>
-</span><span id="__span-12-4"><a href="#__codelineno-12-4" id="__codelineno-12-4" name="__codelineno-12-4"></a><span class="w">  </span><span class="nt">"event"</span><span class="p">:</span><span class="w"> </span><span class="s2">"pull"</span><span class="p">,</span>
-</span><span id="__span-12-5"><a href="#__codelineno-12-5" id="__codelineno-12-5" name="__codelineno-12-5"></a><span class="w">  </span><span class="nt">"group"</span><span class="p">:</span><span class="w"> </span><span class="s2">"dev"</span><span class="p">,</span>
-</span><span id="__span-12-6"><a href="#__codelineno-12-6" id="__codelineno-12-6" name="__codelineno-12-6"></a><span class="w">  </span><span class="nt">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"pipeline1"</span><span class="p">,</span>
-</span><span id="__span-12-7"><a href="#__codelineno-12-7" id="__codelineno-12-7" name="__codelineno-12-7"></a><span class="w">  </span><span class="nt">"timestamp"</span><span class="p">:</span><span class="w"> </span><span class="mi">1699339368930</span>
-</span><span id="__span-12-8"><a href="#__codelineno-12-8" id="__codelineno-12-8" name="__codelineno-12-8"></a><span class="p">}</span>
-</span></code></pre></div>
+  should start tailing live events, hit ctrl-c to close it.
   This is ideal for UIs/CLIs reacting to changes in the cluster.</li>
 <li>Check the pipeline status with the run id:
-  <div class="language-bash highlight"><pre><span></span><code><span id="__span-13-1"><a href="#__codelineno-13-1" id="__codelineno-13-1" name="__codelineno-13-1"></a>wendy<span class="w"> </span>pipelines<span class="w"> </span>status<span class="w"> </span>--id<span class="w"> </span>r-0ef66ba9-e397-461b-a6d9-f52f91889264
+  <div class="language-bash highlight"><pre><span></span><code><span id="__span-12-1"><a href="#__codelineno-12-1" id="__codelineno-12-1" name="__codelineno-12-1"></a>wendy<span class="w"> </span>pipelines<span class="w"> </span>status<span class="w"> </span>--id<span class="w"> </span>r-0ef66ba9-e397-461b-a6d9-f52f91889264
 </span></code></pre></div>
   should respond:
-  <div class="language-json highlight"><pre><span></span><code><span id="__span-14-1"><a href="#__codelineno-14-1" id="__codelineno-14-1" name="__codelineno-14-1"></a><span class="s2">"running"</span>
+  <div class="language-json highlight"><pre><span></span><code><span id="__span-13-1"><a href="#__codelineno-13-1" id="__codelineno-13-1" name="__codelineno-13-1"></a><span class="s2">"running"</span>
 </span></code></pre></div></li>
 <li>See the logs of the run at any time:
-  <div class="language-bash highlight"><pre><span></span><code><span id="__span-15-1"><a href="#__codelineno-15-1" id="__codelineno-15-1" name="__codelineno-15-1"></a>wendy<span class="w"> </span>pipelines<span class="w"> </span>logs<span class="w"> </span>--id<span class="w"> </span>r-0ef66ba9-e397-461b-a6d9-f52f91889264<span class="w"> </span>--offset<span class="w"> </span><span class="m">0</span><span class="w"> </span>--lines<span class="w"> </span><span class="m">50</span>
+  <div class="language-bash highlight"><pre><span></span><code><span id="__span-14-1"><a href="#__codelineno-14-1" id="__codelineno-14-1" name="__codelineno-14-1"></a>wendy<span class="w"> </span>pipelines<span class="w"> </span>logs<span class="w"> </span>--id<span class="w"> </span>r-0ef66ba9-e397-461b-a6d9-f52f91889264<span class="w"> </span>--offset<span class="w"> </span><span class="m">0</span><span class="w"> </span>--lines<span class="w"> </span><span class="m">50</span>
 </span></code></pre></div></li>
 <li>If all goes well, eventually it should respond with a <code>passed</code> status with the same status call as above.</li>
 <li>Download the produced artifact:
-  <div class="language-bash highlight"><pre><span></span><code><span id="__span-16-1"><a href="#__codelineno-16-1" id="__codelineno-16-1" name="__codelineno-16-1"></a>wendy<span class="w"> </span>pipelines<span class="w"> </span>fetch-artifact<span class="w"> </span>--group<span class="w"> </span>dev<span class="w"> </span>--name<span class="w"> </span>pipeline1<span class="w"> </span>--id<span class="w"> </span>r-0ef66ba9-e397-461b-a6d9-f52f91889264<span class="w"> </span>--store-name<span class="w"> </span>artifact-local<span class="w"> </span>--artifact-name<span class="w"> </span>app
+  <div class="language-bash highlight"><pre><span></span><code><span id="__span-15-1"><a href="#__codelineno-15-1" id="__codelineno-15-1" name="__codelineno-15-1"></a>wendy<span class="w"> </span>pipelines<span class="w"> </span>fetch-artifact<span class="w"> </span>--group<span class="w"> </span>dev<span class="w"> </span>--name<span class="w"> </span>pipeline1<span class="w"> </span>--id<span class="w"> </span>r-0ef66ba9-e397-461b-a6d9-f52f91889264<span class="w"> </span>--store-name<span class="w"> </span>artifact-local<span class="w"> </span>--artifact-name<span class="w"> </span>app
 </span></code></pre></div></li>
 <li>Extract the TAR file:
-  <div class="language-bash highlight"><pre><span></span><code><span id="__span-17-1"><a href="#__codelineno-17-1" id="__codelineno-17-1" name="__codelineno-17-1"></a>tar<span class="w"> </span>xvf<span class="w"> </span>app.tar
+  <div class="language-bash highlight"><pre><span></span><code><span id="__span-16-1"><a href="#__codelineno-16-1" id="__codelineno-16-1" name="__codelineno-16-1"></a>tar<span class="w"> </span>xvf<span class="w"> </span>app.tar
 </span></code></pre></div></li>
 <li>Test the executable file. Running following command should give "Hello Casey"
-  <div class="language-bash highlight"><pre><span></span><code><span id="__span-18-1"><a href="#__codelineno-18-1" id="__codelineno-18-1" name="__codelineno-18-1"></a>./app
+  <div class="language-bash highlight"><pre><span></span><code><span id="__span-17-1"><a href="#__codelineno-17-1" id="__codelineno-17-1" name="__codelineno-17-1"></a>./app
 </span></code></pre></div></li>
 </ul>
 <p>See what else is possible using <code>wendy --help</code>.</p>

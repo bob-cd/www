@@ -233,21 +233,22 @@
 <div class="md-content" data-md-component="content">
 <article class="md-content__inner md-typeset">
 <h1 id="why-bob">Why Bob?<a class="headerlink" href="#why-bob" title="Permanent link">¶</a></h1>
+<p>Bob is mostly built out of <a href="https://github.com/lispyclouds">my</a> experiences in working on platform teams in various places and seeing various pain points. Bob represents my idea of what something that could be there to not get in your way, be flexible and robust enough to serve most of the needs.
+It is a very much usable piece of software which has seen use, but at the end of the day its intended as my expression of ideas: out there to inspire others and reduce some of the pains I faced for others.</p>
 <p>Some of the (non exhaustive) reasons of why Bob</p>
 <ul>
 <li>Be fully Free and Open Source (FOSS) under the MIT License.</li>
 <li>Have a very small core with a limited feature set and be opinionated about them.</li>
 <li>Steps (direct commands like shell)</li>
-<li>Pipeline (Collection of steps which can consume artifacts from other pipelines)</li>
-<li>Environment (Key value store associated with either steps and/or Pipelines)</li>
-<li>Resources (Things like source code or artifacts produced by pipelines)</li>
-<li>Artifacts (Something built by a Pipeline)</li>
+<li>Pipeline (Collection of steps which can consume artifacts from other pipelines).</li>
+<li>Environment (Key value store associated with either steps and/or Pipelines).</li>
+<li>Resources (Things like source code or artifacts produced by pipelines).</li>
+<li>Artifacts (Something built by a Pipeline).</li>
 <li>Expose the above feature set entirely via an API, hence allow any client to configure/control it. Also not be affected by bugs in it.</li>
-<li>Be agnostic of an UI</li>
-<li>Be more extensible than great things like Concourse.ci</li>
-<li>Accept the above stuff via an YAML as well</li>
-<li>Build pretty much everything else external resources or orchestrate via API</li>
-<li>Scale via multiple federated bob instances(think Cassandra) and share loads and resources</li>
+<li>Be agnostic of an UI.</li>
+<li>Be more extensible than great things like Concourse.ci.</li>
+<li>Build pretty much everything else external resources or orchestrate via API.</li>
+<li>Scale via multiple federated Bob instances(think Cassandra) and share loads and resources.</li>
 </ul>
 <h2 id="bob-vs-the-rest-of-the-ci-tools">Bob vs the rest of the CI tools<a class="headerlink" href="#bob-vs-the-rest-of-the-ci-tools" title="Permanent link">¶</a></h2>
 <p>Some of the perceived pain points in the currently established CI/CD systems:</p>
@@ -265,7 +266,7 @@
 </ul>
 <h2 id="inspiration">Inspiration<a class="headerlink" href="#inspiration" title="Permanent link">¶</a></h2>
 <ul>
-<li><a href="https://concourse-ci.org/">Concourse CI</a></li>
+<li><a href="https://concourse-ci.org/">Concourse CI</a> and <a href="https://ovh.github.io/cds/">OVH CDS</a></li>
 <li>EMacs architecture</li>
 <li>UNIX <a href="https://en.wikipedia.org/wiki/Unix_philosophy">philosophy</a></li>
 <li><a href="https://www.python.org/dev/peps/pep-0020/">The Zen of Python</a></li>
