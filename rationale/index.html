@@ -238,12 +238,14 @@ It is a very much usable piece of software which has seen use, but at the end of
 <p>Some of the (non exhaustive) reasons of why Bob</p>
 <ul>
 <li>Be fully Free and Open Source (FOSS) under the MIT License.</li>
-<li>Have a very small core with a limited feature set and be opinionated about them.</li>
+<li>Have a very small core with a limited feature set and be opinionated about them:<ul>
 <li>Steps (direct commands like shell)</li>
 <li>Pipeline (Collection of steps which can consume artifacts from other pipelines).</li>
 <li>Environment (Key value store associated with either steps and/or Pipelines).</li>
 <li>Resources (Things like source code or artifacts produced by pipelines).</li>
 <li>Artifacts (Something built by a Pipeline).</li>
+</ul>
+</li>
 <li>Expose the above feature set entirely via an API, hence allow any client to configure/control it. Also not be affected by bugs in it.</li>
 <li>Be agnostic of an UI.</li>
 <li>Be more extensible than great things like Concourse.ci.</li>
@@ -251,23 +253,29 @@ It is a very much usable piece of software which has seen use, but at the end of
 <li>Scale via multiple federated Bob instances(think Cassandra) and share loads and resources.</li>
 </ul>
 <h2 id="bob-vs-the-rest-of-the-ci-tools">Bob vs the rest of the CI tools<a class="headerlink" href="#bob-vs-the-rest-of-the-ci-tools" title="Permanent link">¶</a></h2>
-<p>Some of the perceived pain points in the currently established CI/CD systems:</p>
+<p>Some of the perceived pain points in the currently established CI/CD systems</p>
 <ul>
-<li>The plugin architecture. They are mainly to be extended via JARs which are loaded by the main process. This presents the following issues:</li>
-<li>Bugs and vulnerabilities in the plugin. Most if not all of the plugins we use for these systems are the primary root cause for much of the CVEs. Also a badly written plugin can bring the whole thing down.</li>
-<li>We absolutely have to use a JVM language to write the plugins if the CI is in Java.</li>
-<li>We are limited by the API provided by the main system to do stuff like get resources and orchestrate the artifacts around.</li>
-<li>Monolithic, large and complex. IMO these systems have grown to a stage where they have a complex UX and requires a good amount of learning curve to use properly.</li>
+<li>
+<p>The plugin architectures: They are mainly to be extended via loading of code into the main process. This presents the following issues:</p>
+<ul>
+<li>Bugs and vulnerabilities in the plugin. Most if not all of the plugins we use for these systems are the primary root cause for much of the CVEs and bugs. Well known examples for this can be seen in <a href="https://wiki.jenkins.io/display/JENKINS/Plugin+tutorial">Jenkins</a>, <a href="https://docs.gocd.org/current/extension_points/">GoCD</a>, <a href="https://plugins.jetbrains.com/docs/teamcity/">TeamCity</a>.</li>
+<li>We have to use the same tech that the core was made in. eg. JVM tech for Jenkins plugins.</li>
+<li>We are limited by the API provided by the main system for instance, to get resources and orchestrate the artifacts around.</li>
+<li>The core has now one more possible attack surface where an issue in the plugin can cause nasty things to happen in the core ranging from it being unstable to security <a href="https://www.cvedetails.com/vulnerability-list/vendor_id-15865/product_id-34004/Jenkins-Jenkins.html">issues</a>.</li>
+<li>Deploying these plugins often means a restart of the system, downtimes, misconfiguration and more importantly this needs happen on the same machine as the core and opens up a possibility of creating <a href="https://martinfowler.com/bliki/SnowflakeServer.html">snowflake</a> servers.</li>
+</ul>
+</li>
+<li>
+<p>Monolithic, large and complex. IMO these systems have grown to a stage where they have a complex UX and requires a good amount of learning curve to use intuitively.</p>
+</li>
 <li>The UI is merged with the back-end source hence pretty much providing an opinionated view of the CI infra and to control it. Building mobile interfaces or accessing on them can be tricky.</li>
 <li>The API is patchy. They don’t really expose the entire infra via API and extending/controlling them via just their API is hard.</li>
-<li>Jenkins doesn’t even have a proper notion of Pipeline and the flow of artifacts.</li>
-<li>Some good ones aren’t even FOSS.</li>
-<li>Infra is hard to version control</li>
+<li>CI Infra is hard to version control.</li>
 </ul>
 <h2 id="inspiration">Inspiration<a class="headerlink" href="#inspiration" title="Permanent link">¶</a></h2>
 <ul>
 <li><a href="https://concourse-ci.org/">Concourse CI</a> and <a href="https://ovh.github.io/cds/">OVH CDS</a></li>
-<li>EMacs architecture</li>
+<li>The Emacs architecture</li>
 <li>UNIX <a href="https://en.wikipedia.org/wiki/Unix_philosophy">philosophy</a></li>
 <li><a href="https://www.python.org/dev/peps/pep-0020/">The Zen of Python</a></li>
 </ul>

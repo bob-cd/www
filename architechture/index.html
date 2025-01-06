@@ -141,17 +141,6 @@
       Extending Bob and Plugins
     </span>
 </a>
-<nav aria-label="Extending Bob and Plugins" class="md-nav">
-<ul class="md-nav__list">
-<li class="md-nav__item">
-<a class="md-nav__link" href="#problems-with-extending-other-ci-tooling">
-<span class="md-ellipsis">
-      Problems with Extending other CI tooling
-    </span>
-</a>
-</li>
-</ul>
-</nav>
 </li>
 <li class="md-nav__item">
 <a class="md-nav__link" href="#the-execution-model">
@@ -256,17 +245,6 @@
       Extending Bob and Plugins
     </span>
 </a>
-<nav aria-label="Extending Bob and Plugins" class="md-nav">
-<ul class="md-nav__list">
-<li class="md-nav__item">
-<a class="md-nav__link" href="#problems-with-extending-other-ci-tooling">
-<span class="md-ellipsis">
-      Problems with Extending other CI tooling
-    </span>
-</a>
-</li>
-</ul>
-</nav>
 </li>
 <li class="md-nav__item">
 <a class="md-nav__link" href="#the-execution-model">
@@ -283,33 +261,29 @@
 <div class="md-content" data-md-component="content">
 <article class="md-content__inner md-typeset">
 <h1 id="bobs-architecture">Bob's Architecture<a class="headerlink" href="#bobs-architecture" title="Permanent link">¶</a></h1>
+<p>The following are the tenets of Bob's design:</p>
+<ul>
+<li>Have decentralised, controller/masterless clusters: simplify decision making and network chatter. No centralised decision making.</li>
+<li>Be <a href="https://www.atlassian.com/blog/technology/spec-first-api-development">spec-first</a> throughout: All the way from the APIServers, CLIs and the whole ecosystem.</li>
+<li>Be externally extensible by decomposition and decoupling: More, smaller, complementing parts are better than one fewer bigger ones.</li>
+</ul>
 <p><a class="glightbox" data-desc-position="bottom" data-height="auto" data-type="image" data-width="auto" href="../img/bob-arch.png"><img alt="Architecture" src="../img/bob-arch.png"/></a></p>
 <h2 id="bob-core">Bob Core<a class="headerlink" href="#bob-core" title="Permanent link">¶</a></h2>
-<p>Bob follows the UNIX <a href="https://en.wikipedia.org/wiki/Unix_philosophy">Philosophy</a>
-of being small, robust and do one thing and do it well. Unlike most of the popular
-CI tooling, Bob tries to be a collection of small components which does
-one thing really well and allows you to <em>compose them in the way you want</em>
-and build your CI platform.</p>
+<p>Bob follows the UNIX <a href="https://en.wikipedia.org/wiki/Unix_philosophy">Philosophy</a> of being small, robust and do one thing and do it well.
+Unlike most of the popular CI tooling, Bob tries to be a collection of small components which does one thing really well and allows you to compose them in the way you want and build your CI platform.</p>
 <p>The core of the project lives in this <a href="https://github.com/bob-cd/bob">repository</a>. Its entirely written in <a href="https://clojure.org/">Clojure</a>, which allows Bob to be really small, scale easily and handle concurrency well. It uses <a href="https://xtdb.com/">XTDB</a> as its temporal, document database.</p>
-<p>All of the internals is exposed via a standard REST API.</p>
+<p>All of the internals is exposed via a standard <a href="../api/">REST API</a>.</p>
 <h2 id="pipeline">Pipeline<a class="headerlink" href="#pipeline" title="Permanent link">¶</a></h2>
 <p>A <a href="../pipelines/">Pipeline</a> is the one and only build unit for Bob. Bob is simple and therefore avoids the need of complex hierarchies (e.g. Jobs). A pipeline is completely self contained and can be linked to other pipelines either in up/downstream.</p>
 <h2 id="extending-bob-and-plugins">Extending Bob and Plugins<a class="headerlink" href="#extending-bob-and-plugins" title="Permanent link">¶</a></h2>
 <p>Extending should be external, i.e. one should be able to <em>change Bob’s behavior by calling/using it differently</em> without having to dig too deep into the core.</p>
 <p>Extension of a CI/CD system is generally needed in the case of making the system interact with the world differently. Examples would be cloning a different kind of source control, reading a file from network, reacting to events etc. For this Bob defines a <a href="../resources/">Resource</a>, its way of abstracting out the need to know <em>how</em> to fetch something.</p>
 <p>The other need for extension is to store/deploy the results of a build somewhere. For this Bob defines an <a href="../artifacts/">Artifact</a>, its way of abstracting out the need to know <em>how</em> to publish its build results.</p>
-<h3 id="problems-with-extending-other-ci-tooling">Problems with Extending other CI tooling<a class="headerlink" href="#problems-with-extending-other-ci-tooling" title="Permanent link">¶</a></h3>
-<p>Bob strongly <em>rejects</em> the idea of traditional plugins wherein the plugin is generally written in the same technologies as the core and is loaded into the <em>same process</em> as the core. Well known examples for this can be seen in <a href="https://wiki.jenkins.io/display/JENKINS/Plugin+tutorial">Jenkins</a>, <a href="https://docs.gocd.org/current/extension_points/">GoCD</a>, <a href="https://plugins.jetbrains.com/docs/teamcity/">TeamCity</a> and others. This style of extending the core functionality presents the following issues:</p>
-<ul>
-<li>The plugin author(s) must know the technologies used to develop the core.</li>
-<li>The core has now one more possible attack surface where an issue in the plugin can cause nasty things to happen in the core ranging from it being unstable to security <a href="https://www.cvedetails.com/vulnerability-list/vendor_id-15865/product_id-34004/Jenkins-Jenkins.html">issues</a>.</li>
-<li>Deploying these plugins often means a restart of the system, downtimes, misconfiguration and more importantly this needs happen on the same machine as the core and opens up a possibility of creating <a href="https://martinfowler.com/bliki/SnowflakeServer.html">snowflake</a> servers.</li>
-</ul>
 <h2 id="the-execution-model">The Execution Model<a class="headerlink" href="#the-execution-model" title="Permanent link">¶</a></h2>
 <p>Like its depicted in the diagram above, Bob uses <a href="https://podman.io/">Podman</a> internally as its execution engine. This provides an easily provisioned, isolated and disposable environment for build to take place in. The runners in Bob runners are guaranteed to be <strong>rootless</strong> hence are safe to be run in a cloud native environment. Each runner can execute multiple pipeline runs concurrently fully isolated from each other.</p>
 <p>A pipeline is executed in the following way:</p>
 <ul>
-<li>The image provided in the pipeline is pulled by the Podman (if already not present).</li>
+<li>The image provided in the pipeline is pulled in (if already not present).</li>
 <li>A container is created with the command specified in the first step.</li>
 <li>If any environment variables are defined, they are added to the container.</li>
 <li>If the step has defined a <code>needs_resource</code> key, the corresponding resource is fetched from the provider and copied over to the container.</li>

@@ -292,19 +292,21 @@
 <li>Use a remote cluster or setup a local one using <a href="https://kind.sigs.k8s.io/">kind</a> or <a href="https://minikube.sigs.k8s.io/docs/">Minikube</a> etc</li>
 <li>Clone the <a href="https://github.com/bob-cd/bob-deploy">repo</a></li>
 <li>Apply the manifests: <code>kubectl apply -f k8s/</code></li>
-<li>This depolys the cluster exposed via the <code>bob-apiserver</code> ClusterIP Serivce:</li>
+<li>This depolys the cluster exposed via the <code>bob-apiserver</code> ClusterIP Serivce:<ul>
 <li>If using a remote cluster, you may want to <a href="https://kubernetes.io/docs/tutorials/stateless-application/expose-external-ip-address/">expose</a> it</li>
 <li>If on a local cluster, port forward it: <code>kubectl port-forward service/bob-apiserver 7777:7777</code></li>
+</ul>
+</li>
 </ol>
 <h3 id="on-podman-or-docker">On Podman or Docker<a class="headerlink" href="#on-podman-or-docker" title="Permanent link">¶</a></h3>
 <ol>
 <li>Download <a href="https://podman.io/getting-started/installation">Podman</a> or <a href="https://docs.docker.com/engine/security/rootless/">Rootless Docker</a></li>
 <li>Fetch this <a href="https://github.com/bob-cd/bob-deploy/blob/main/docker-compose.yml">docker-compose.yml</a> file with <code>curl -LfO 'https://raw.githubusercontent.com/bob-cd/bob-deploy/main/docker-compose.yml'</code></li>
 <li>In the same directory, start the cluster using <a href="https://github.com/containers/podman-compose#installation">podman-compose</a> or <a href="https://docs.docker.com/compose/">docker-compose</a>:
-   <div class="language-bash highlight"><pre><span></span><code><span id="__span-0-1"><a href="#__codelineno-0-1" id="__codelineno-0-1" name="__codelineno-0-1"></a>podman-compose<span class="w"> </span>up
+    <div class="language-bash highlight"><pre><span></span><code><span id="__span-0-1"><a href="#__codelineno-0-1" id="__codelineno-0-1" name="__codelineno-0-1"></a>podman-compose<span class="w"> </span>up
 </span></code></pre></div>
-   or
-   <div class="language-bash highlight"><pre><span></span><code><span id="__span-1-1"><a href="#__codelineno-1-1" id="__codelineno-1-1" name="__codelineno-1-1"></a>docker-compose<span class="w"> </span>up
+    or
+    <div class="language-bash highlight"><pre><span></span><code><span id="__span-1-1"><a href="#__codelineno-1-1" id="__codelineno-1-1" name="__codelineno-1-1"></a>docker-compose<span class="w"> </span>up
 </span></code></pre></div></li>
 <li>When it all comes up, bob should be available on port <code>7777</code></li>
 </ol>
@@ -316,11 +318,11 @@ HTTP clients like <a href="https://curl.haxx.se/">curl</a>, <a href="https://htt
 <p>This assumes the above steps have been followed and a Bob cluster is available on <code>http://localhost:7777</code> and Wendy is set up.</p>
 <ul>
 <li>Test if Bob is ready:
-  <div class="language-bash highlight"><pre><span></span><code><span id="__span-2-1"><a href="#__codelineno-2-1" id="__codelineno-2-1" name="__codelineno-2-1"></a>wendy<span class="w"> </span>cluster<span class="w"> </span>ping
+    <div class="language-bash highlight"><pre><span></span><code><span id="__span-2-1"><a href="#__codelineno-2-1" id="__codelineno-2-1" name="__codelineno-2-1"></a>wendy<span class="w"> </span>cluster<span class="w"> </span>ping
 </span></code></pre></div>
-  should respond with a resounding <code>Pong</code> if all good.</li>
+    should respond with a resounding <code>Pong</code> if all good.</li>
 <li>Create a pipeline manifest and set the <code>GOOS</code> and <code>GOARCH</code> <a href="https://golang.org/doc/install/source#environment">values</a> according to your OS:
-  <div class="language-yaml highlight"><table class="highlighttable"><tr><th class="filename" colspan="2"><span class="filename">pipeline.yaml</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-3-1"> 1</a></span>
+    <div class="language-yaml highlight"><table class="highlighttable"><tr><th class="filename" colspan="2"><span class="filename">pipeline.yaml</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-3-1"> 1</a></span>
 <span class="normal"><a href="#__codelineno-3-2"> 2</a></span>
 <span class="normal"><a href="#__codelineno-3-3"> 3</a></span>
 <span class="normal"><a href="#__codelineno-3-4"> 4</a></span>
@@ -350,34 +352,34 @@ HTTP clients like <a href="https://curl.haxx.se/">curl</a>, <a href="https://htt
 <span class="normal"><a href="#__codelineno-3-28">28</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1"></a><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">wendy.bob.cd/v1alpha1</span>
 </span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2"></a><span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Pipeline</span>
 </span><span id="__span-3-3"><a id="__codelineno-3-3" name="__codelineno-3-3"></a><span class="nt">identifiedBy</span><span class="p">:</span>
-</span><span id="__span-3-4"><a id="__codelineno-3-4" name="__codelineno-3-4"></a><span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">group</span>
-</span><span id="__span-3-5"><a id="__codelineno-3-5" name="__codelineno-3-5"></a><span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">name</span>
+</span><span id="__span-3-4"><a id="__codelineno-3-4" name="__codelineno-3-4"></a><span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">group</span>
+</span><span id="__span-3-5"><a id="__codelineno-3-5" name="__codelineno-3-5"></a><span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">name</span>
 </span><span id="__span-3-6"><a id="__codelineno-3-6" name="__codelineno-3-6"></a><span class="nt">spec</span><span class="p">:</span>
-</span><span id="__span-3-7"><a id="__codelineno-3-7" name="__codelineno-3-7"></a><span class="w">  </span><span class="nt">group</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">dev</span>
-</span><span id="__span-3-8"><a id="__codelineno-3-8" name="__codelineno-3-8"></a><span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">pipeline1</span>
-</span><span id="__span-3-9"><a id="__codelineno-3-9" name="__codelineno-3-9"></a><span class="w">  </span><span class="nt">image</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">docker.io/library/golang:alpine</span>
-</span><span id="__span-3-10"><a id="__codelineno-3-10" name="__codelineno-3-10"></a><span class="w">  </span><span class="nt">steps</span><span class="p">:</span>
-</span><span id="__span-3-11"><a id="__codelineno-3-11" name="__codelineno-3-11"></a><span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">needs_resource</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">source</span>
-</span><span id="__span-3-12"><a id="__codelineno-3-12" name="__codelineno-3-12"></a><span class="w">      </span><span class="nt">cmd</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">go test</span>
-</span><span id="__span-3-13"><a id="__codelineno-3-13" name="__codelineno-3-13"></a><span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">needs_resource</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">source</span>
-</span><span id="__span-3-14"><a id="__codelineno-3-14" name="__codelineno-3-14"></a><span class="w">      </span><span class="nt">vars</span><span class="p">:</span>
-</span><span id="__span-3-15"><a id="__codelineno-3-15" name="__codelineno-3-15"></a><span class="w">        </span><span class="nt">GOOS</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">linux</span>
-</span><span id="__span-3-16"><a id="__codelineno-3-16" name="__codelineno-3-16"></a><span class="w">        </span><span class="nt">GOARCH</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">amd64</span>
-</span><span id="__span-3-17"><a id="__codelineno-3-17" name="__codelineno-3-17"></a><span class="w">      </span><span class="nt">cmd</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">go build -o app</span>
-</span><span id="__span-3-18"><a id="__codelineno-3-18" name="__codelineno-3-18"></a><span class="w">      </span><span class="nt">produces_artifact</span><span class="p">:</span>
-</span><span id="__span-3-19"><a id="__codelineno-3-19" name="__codelineno-3-19"></a><span class="w">        </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">app</span>
-</span><span id="__span-3-20"><a id="__codelineno-3-20" name="__codelineno-3-20"></a><span class="w">        </span><span class="nt">path</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">app</span>
-</span><span id="__span-3-21"><a id="__codelineno-3-21" name="__codelineno-3-21"></a><span class="w">        </span><span class="nt">store</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">artifact-local</span>
-</span><span id="__span-3-22"><a id="__codelineno-3-22" name="__codelineno-3-22"></a><span class="w">  </span><span class="nt">resources</span><span class="p">:</span>
-</span><span id="__span-3-23"><a id="__codelineno-3-23" name="__codelineno-3-23"></a><span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">source</span>
-</span><span id="__span-3-24"><a id="__codelineno-3-24" name="__codelineno-3-24"></a><span class="w">      </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">external</span>
-</span><span id="__span-3-25"><a id="__codelineno-3-25" name="__codelineno-3-25"></a><span class="w">      </span><span class="nt">provider</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">resource-git</span>
-</span><span id="__span-3-26"><a id="__codelineno-3-26" name="__codelineno-3-26"></a><span class="w">      </span><span class="nt">params</span><span class="p">:</span>
-</span><span id="__span-3-27"><a id="__codelineno-3-27" name="__codelineno-3-27"></a><span class="w">        </span><span class="nt">repo</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">https://github.com/lispyclouds/bob-example</span>
-</span><span id="__span-3-28"><a id="__codelineno-3-28" name="__codelineno-3-28"></a><span class="w">        </span><span class="nt">branch</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">main</span>
+</span><span id="__span-3-7"><a id="__codelineno-3-7" name="__codelineno-3-7"></a><span class="w">    </span><span class="nt">group</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">dev</span>
+</span><span id="__span-3-8"><a id="__codelineno-3-8" name="__codelineno-3-8"></a><span class="w">    </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">pipeline1</span>
+</span><span id="__span-3-9"><a id="__codelineno-3-9" name="__codelineno-3-9"></a><span class="w">    </span><span class="nt">image</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">docker.io/library/golang:alpine</span>
+</span><span id="__span-3-10"><a id="__codelineno-3-10" name="__codelineno-3-10"></a><span class="w">    </span><span class="nt">steps</span><span class="p">:</span>
+</span><span id="__span-3-11"><a id="__codelineno-3-11" name="__codelineno-3-11"></a><span class="w">        </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">needs_resource</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">source</span>
+</span><span id="__span-3-12"><a id="__codelineno-3-12" name="__codelineno-3-12"></a><span class="w">          </span><span class="nt">cmd</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">go test</span>
+</span><span id="__span-3-13"><a id="__codelineno-3-13" name="__codelineno-3-13"></a><span class="w">        </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">needs_resource</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">source</span>
+</span><span id="__span-3-14"><a id="__codelineno-3-14" name="__codelineno-3-14"></a><span class="w">          </span><span class="nt">vars</span><span class="p">:</span>
+</span><span id="__span-3-15"><a id="__codelineno-3-15" name="__codelineno-3-15"></a><span class="w">              </span><span class="nt">GOOS</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">linux</span>
+</span><span id="__span-3-16"><a id="__codelineno-3-16" name="__codelineno-3-16"></a><span class="w">              </span><span class="nt">GOARCH</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">amd64</span>
+</span><span id="__span-3-17"><a id="__codelineno-3-17" name="__codelineno-3-17"></a><span class="w">          </span><span class="nt">cmd</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">go build -o app</span>
+</span><span id="__span-3-18"><a id="__codelineno-3-18" name="__codelineno-3-18"></a><span class="w">          </span><span class="nt">produces_artifact</span><span class="p">:</span>
+</span><span id="__span-3-19"><a id="__codelineno-3-19" name="__codelineno-3-19"></a><span class="w">              </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">app</span>
+</span><span id="__span-3-20"><a id="__codelineno-3-20" name="__codelineno-3-20"></a><span class="w">              </span><span class="nt">path</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">app</span>
+</span><span id="__span-3-21"><a id="__codelineno-3-21" name="__codelineno-3-21"></a><span class="w">              </span><span class="nt">store</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">artifact-local</span>
+</span><span id="__span-3-22"><a id="__codelineno-3-22" name="__codelineno-3-22"></a><span class="w">    </span><span class="nt">resources</span><span class="p">:</span>
+</span><span id="__span-3-23"><a id="__codelineno-3-23" name="__codelineno-3-23"></a><span class="w">        </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">source</span>
+</span><span id="__span-3-24"><a id="__codelineno-3-24" name="__codelineno-3-24"></a><span class="w">          </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">external</span>
+</span><span id="__span-3-25"><a id="__codelineno-3-25" name="__codelineno-3-25"></a><span class="w">          </span><span class="nt">provider</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">resource-git</span>
+</span><span id="__span-3-26"><a id="__codelineno-3-26" name="__codelineno-3-26"></a><span class="w">          </span><span class="nt">params</span><span class="p">:</span>
+</span><span id="__span-3-27"><a id="__codelineno-3-27" name="__codelineno-3-27"></a><span class="w">              </span><span class="nt">repo</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">https://github.com/lispyclouds/bob-example</span>
+</span><span id="__span-3-28"><a id="__codelineno-3-28" name="__codelineno-3-28"></a><span class="w">              </span><span class="nt">branch</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">main</span>
 </span></code></pre></div></td></tr></table></div></li>
 <li>Create the pipeline:
-  <div class="language-bash highlight"><pre><span></span><code><span id="__span-4-1"><a href="#__codelineno-4-1" id="__codelineno-4-1" name="__codelineno-4-1"></a>wendy<span class="w"> </span>apply<span class="w"> </span>-m<span class="w"> </span>pipeline.yaml
+    <div class="language-bash highlight"><pre><span></span><code><span id="__span-4-1"><a href="#__codelineno-4-1" id="__codelineno-4-1" name="__codelineno-4-1"></a>wendy<span class="w"> </span>apply<span class="w"> </span>-m<span class="w"> </span>pipeline.yaml
 </span></code></pre></div></li>
 <li>Create a resource_provider manifest in a file <code>resource_provider.yaml</code>
 <div class="language-yaml highlight"><table class="highlighttable"><tr><th class="filename" colspan="2"><span class="filename">resource_provider.yaml</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-5-1">1</a></span>
@@ -389,13 +391,13 @@ HTTP clients like <a href="https://curl.haxx.se/">curl</a>, <a href="https://htt
 <span class="normal"><a href="#__codelineno-5-7">7</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1"></a><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">wendy.bob.cd/v1alpha1</span>
 </span><span id="__span-5-2"><a id="__codelineno-5-2" name="__codelineno-5-2"></a><span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ResourceProvider</span>
 </span><span id="__span-5-3"><a id="__codelineno-5-3" name="__codelineno-5-3"></a><span class="nt">identifiedBy</span><span class="p">:</span>
-</span><span id="__span-5-4"><a id="__codelineno-5-4" name="__codelineno-5-4"></a><span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">name</span>
+</span><span id="__span-5-4"><a id="__codelineno-5-4" name="__codelineno-5-4"></a><span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">name</span>
 </span><span id="__span-5-5"><a id="__codelineno-5-5" name="__codelineno-5-5"></a><span class="nt">spec</span><span class="p">:</span>
-</span><span id="__span-5-6"><a id="__codelineno-5-6" name="__codelineno-5-6"></a><span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">resource-git</span>
-</span><span id="__span-5-7"><a id="__codelineno-5-7" name="__codelineno-5-7"></a><span class="w">  </span><span class="nt">url</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">http://resource-git:8000</span>
+</span><span id="__span-5-6"><a id="__codelineno-5-6" name="__codelineno-5-6"></a><span class="w">    </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">resource-git</span>
+</span><span id="__span-5-7"><a id="__codelineno-5-7" name="__codelineno-5-7"></a><span class="w">    </span><span class="nt">url</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">http://resource-git:8000</span>
 </span></code></pre></div></td></tr></table></div></li>
 <li>Register the resource provider:
-  <div class="language-bash highlight"><pre><span></span><code><span id="__span-6-1"><a href="#__codelineno-6-1" id="__codelineno-6-1" name="__codelineno-6-1"></a>wendy<span class="w"> </span>apply<span class="w"> </span>-m<span class="w"> </span>resource_provider.yaml
+    <div class="language-bash highlight"><pre><span></span><code><span id="__span-6-1"><a href="#__codelineno-6-1" id="__codelineno-6-1" name="__codelineno-6-1"></a>wendy<span class="w"> </span>apply<span class="w"> </span>-m<span class="w"> </span>resource_provider.yaml
 </span></code></pre></div></li>
 <li>Create an artifact_store manifest in a file <code>artifact_store.yaml</code>
 <div class="language-yaml highlight"><table class="highlighttable"><tr><th class="filename" colspan="2"><span class="filename">artifact_store.yaml</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-7-1">1</a></span>
@@ -407,44 +409,44 @@ HTTP clients like <a href="https://curl.haxx.se/">curl</a>, <a href="https://htt
 <span class="normal"><a href="#__codelineno-7-7">7</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1"></a><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">wendy.bob.cd/v1alpha1</span>
 </span><span id="__span-7-2"><a id="__codelineno-7-2" name="__codelineno-7-2"></a><span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ArtifactStore</span>
 </span><span id="__span-7-3"><a id="__codelineno-7-3" name="__codelineno-7-3"></a><span class="nt">identifiedBy</span><span class="p">:</span>
-</span><span id="__span-7-4"><a id="__codelineno-7-4" name="__codelineno-7-4"></a><span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">name</span>
+</span><span id="__span-7-4"><a id="__codelineno-7-4" name="__codelineno-7-4"></a><span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">name</span>
 </span><span id="__span-7-5"><a id="__codelineno-7-5" name="__codelineno-7-5"></a><span class="nt">spec</span><span class="p">:</span>
-</span><span id="__span-7-6"><a id="__codelineno-7-6" name="__codelineno-7-6"></a><span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">artifact-local</span>
-</span><span id="__span-7-7"><a id="__codelineno-7-7" name="__codelineno-7-7"></a><span class="w">  </span><span class="nt">url</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">http://artifact-local:8001</span>
+</span><span id="__span-7-6"><a id="__codelineno-7-6" name="__codelineno-7-6"></a><span class="w">    </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">artifact-local</span>
+</span><span id="__span-7-7"><a id="__codelineno-7-7" name="__codelineno-7-7"></a><span class="w">    </span><span class="nt">url</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">http://artifact-local:8001</span>
 </span></code></pre></div></td></tr></table></div></li>
 <li>Register the artifact store:
-  <div class="language-bash highlight"><pre><span></span><code><span id="__span-8-1"><a href="#__codelineno-8-1" id="__codelineno-8-1" name="__codelineno-8-1"></a><span class="w"> </span>wendy<span class="w"> </span>apply<span class="w"> </span>-m<span class="w"> </span>artifact_store.yaml
+    <div class="language-bash highlight"><pre><span></span><code><span id="__span-8-1"><a href="#__codelineno-8-1" id="__codelineno-8-1" name="__codelineno-8-1"></a><span class="w"> </span>wendy<span class="w"> </span>apply<span class="w"> </span>-m<span class="w"> </span>artifact_store.yaml
 </span></code></pre></div></li>
 <li>Start the pipeline:
-  <div class="language-bash highlight"><pre><span></span><code><span id="__span-9-1"><a href="#__codelineno-9-1" id="__codelineno-9-1" name="__codelineno-9-1"></a>wendy<span class="w"> </span>pipelines<span class="w"> </span>start<span class="w"> </span>--group<span class="w"> </span>dev<span class="w"> </span>--name<span class="w"> </span>pipeline1
+    <div class="language-bash highlight"><pre><span></span><code><span id="__span-9-1"><a href="#__codelineno-9-1" id="__codelineno-9-1" name="__codelineno-9-1"></a>wendy<span class="w"> </span>pipelines<span class="w"> </span>start<span class="w"> </span>--group<span class="w"> </span>dev<span class="w"> </span>--name<span class="w"> </span>pipeline1
 </span></code></pre></div>
-  should respond with a run id like this:
-  <div class="language-json highlight"><pre><span></span><code><span id="__span-10-1"><a href="#__codelineno-10-1" id="__codelineno-10-1" name="__codelineno-10-1"></a><span class="s2">"r-0ef66ba9-e397-461b-a6d9-f52f91889264"</span>
+    should respond with a run id like this:
+    <div class="language-json highlight"><pre><span></span><code><span id="__span-10-1"><a href="#__codelineno-10-1" id="__codelineno-10-1" name="__codelineno-10-1"></a><span class="s2">"r-0ef66ba9-e397-461b-a6d9-f52f91889264"</span>
 </span></code></pre></div>
-  This is like a tracing id, all subsequent interactions can be done with this.</li>
+    This is like a tracing id, all subsequent interactions can be done with this.</li>
 <li>Follow the events of the run via <a href="https://en.wikipedia.org/wiki/Server-sent_events">SSE</a>:
-  <div class="language-bash highlight"><pre><span></span><code><span id="__span-11-1"><a href="#__codelineno-11-1" id="__codelineno-11-1" name="__codelineno-11-1"></a>wendy<span class="w"> </span>events<span class="w"> </span>stream
+    <div class="language-bash highlight"><pre><span></span><code><span id="__span-11-1"><a href="#__codelineno-11-1" id="__codelineno-11-1" name="__codelineno-11-1"></a>wendy<span class="w"> </span>events<span class="w"> </span>stream
 </span></code></pre></div>
-  should start tailing live events, hit ctrl-c to close it.
-  This is ideal for UIs/CLIs reacting to changes in the cluster.</li>
+    should start tailing live events, hit ctrl-c to close it.
+    This is ideal for UIs/CLIs reacting to changes in the cluster.</li>
 <li>Check the pipeline status with the run id:
-  <div class="language-bash highlight"><pre><span></span><code><span id="__span-12-1"><a href="#__codelineno-12-1" id="__codelineno-12-1" name="__codelineno-12-1"></a>wendy<span class="w"> </span>pipelines<span class="w"> </span>status<span class="w"> </span>--id<span class="w"> </span>r-0ef66ba9-e397-461b-a6d9-f52f91889264
+    <div class="language-bash highlight"><pre><span></span><code><span id="__span-12-1"><a href="#__codelineno-12-1" id="__codelineno-12-1" name="__codelineno-12-1"></a>wendy<span class="w"> </span>pipelines<span class="w"> </span>status<span class="w"> </span>--id<span class="w"> </span>r-0ef66ba9-e397-461b-a6d9-f52f91889264
 </span></code></pre></div>
-  should respond:
-  <div class="language-json highlight"><pre><span></span><code><span id="__span-13-1"><a href="#__codelineno-13-1" id="__codelineno-13-1" name="__codelineno-13-1"></a><span class="s2">"running"</span>
+    should respond:
+    <div class="language-json highlight"><pre><span></span><code><span id="__span-13-1"><a href="#__codelineno-13-1" id="__codelineno-13-1" name="__codelineno-13-1"></a><span class="s2">"running"</span>
 </span></code></pre></div></li>
 <li>See the logs of the run at any time:
-  <div class="language-bash highlight"><pre><span></span><code><span id="__span-14-1"><a href="#__codelineno-14-1" id="__codelineno-14-1" name="__codelineno-14-1"></a>wendy<span class="w"> </span>pipelines<span class="w"> </span>logs<span class="w"> </span>--id<span class="w"> </span>r-0ef66ba9-e397-461b-a6d9-f52f91889264<span class="w"> </span>--offset<span class="w"> </span><span class="m">0</span><span class="w"> </span>--lines<span class="w"> </span><span class="m">50</span>
+    <div class="language-bash highlight"><pre><span></span><code><span id="__span-14-1"><a href="#__codelineno-14-1" id="__codelineno-14-1" name="__codelineno-14-1"></a>wendy<span class="w"> </span>pipelines<span class="w"> </span>logs<span class="w"> </span>--id<span class="w"> </span>r-0ef66ba9-e397-461b-a6d9-f52f91889264<span class="w"> </span>--offset<span class="w"> </span><span class="m">0</span><span class="w"> </span>--lines<span class="w"> </span><span class="m">50</span>
 </span></code></pre></div></li>
 <li>If all goes well, eventually it should respond with a <code>passed</code> status with the same status call as above.</li>
 <li>Download the produced artifact:
-  <div class="language-bash highlight"><pre><span></span><code><span id="__span-15-1"><a href="#__codelineno-15-1" id="__codelineno-15-1" name="__codelineno-15-1"></a>wendy<span class="w"> </span>pipelines<span class="w"> </span>fetch-artifact<span class="w"> </span>--group<span class="w"> </span>dev<span class="w"> </span>--name<span class="w"> </span>pipeline1<span class="w"> </span>--id<span class="w"> </span>r-0ef66ba9-e397-461b-a6d9-f52f91889264<span class="w"> </span>--store-name<span class="w"> </span>artifact-local<span class="w"> </span>--artifact-name<span class="w"> </span>app
+    <div class="language-bash highlight"><pre><span></span><code><span id="__span-15-1"><a href="#__codelineno-15-1" id="__codelineno-15-1" name="__codelineno-15-1"></a>wendy<span class="w"> </span>pipelines<span class="w"> </span>fetch-artifact<span class="w"> </span>--group<span class="w"> </span>dev<span class="w"> </span>--name<span class="w"> </span>pipeline1<span class="w"> </span>--id<span class="w"> </span>r-0ef66ba9-e397-461b-a6d9-f52f91889264<span class="w"> </span>--store-name<span class="w"> </span>artifact-local<span class="w"> </span>--artifact-name<span class="w"> </span>app
 </span></code></pre></div></li>
 <li>Extract the TAR file:
-  <div class="language-bash highlight"><pre><span></span><code><span id="__span-16-1"><a href="#__codelineno-16-1" id="__codelineno-16-1" name="__codelineno-16-1"></a>tar<span class="w"> </span>xvf<span class="w"> </span>app.tar
+    <div class="language-bash highlight"><pre><span></span><code><span id="__span-16-1"><a href="#__codelineno-16-1" id="__codelineno-16-1" name="__codelineno-16-1"></a>tar<span class="w"> </span>xvf<span class="w"> </span>app.tar
 </span></code></pre></div></li>
 <li>Test the executable file. Running following command should give "Hello Casey"
-  <div class="language-bash highlight"><pre><span></span><code><span id="__span-17-1"><a href="#__codelineno-17-1" id="__codelineno-17-1" name="__codelineno-17-1"></a>./app
+    <div class="language-bash highlight"><pre><span></span><code><span id="__span-17-1"><a href="#__codelineno-17-1" id="__codelineno-17-1" name="__codelineno-17-1"></a>./app
 </span></code></pre></div></li>
 </ul>
 <p>See what else is possible using <code>wendy --help</code>.</p>
